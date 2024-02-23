@@ -11,10 +11,9 @@ import (
 
 func main() {
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/index.html")
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Bienvenido a la api para el acortador de URLs",
-		})
+		c.HTML(200, "index.html", gin.H{})
 	})
 
 	r.POST("/create-short-url", func(c *gin.Context) {

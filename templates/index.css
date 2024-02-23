@@ -1,0 +1,62 @@
+body {
+  font-family: Arial;
+  background-color: #282a36;
+  color: #fff;
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+p {
+  text-align: center;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+h1 {
+  text-align: center;
+  font-family: Arial; font-weight: bold;
+}
+
+table {
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+th {
+  padding: 10px;
+  text-align: left;
+  background-color: #44475a;
+  border-bottom: 1px solid #44475a;
+  font-family: Arial;
+}
+
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #44475a;
+  font-family: Arial;
+}
+
+.copy-button {
+  background-color: #bd93f9;
+  border-radius: 8px;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 2px;
+  cursor: pointer;
+  font-family: Arial;
+}

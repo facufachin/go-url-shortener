@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear URL Acortada</title>
+</head>
+<body>
+    <form id="shortUrlForm" action="https://facu.gay/create-short-url" method="POST">
+        <label for="longUrl">URL Larga</label><br>
+        <input type="text" id="longUrl" name="long_url"><br>
+        <input type="submit" value="Acortar URL" id="submit">
+        <!-- Hidden User ID field -->
+        <input type="hidden" id="userId" name="user_id" value="e0dba740-fc4b-4977-872c-d360239e6b10"><br>
+    </form>
+
+    <div id="output" style="display: none;">
+        <p id="message"></p>
+        <p id="shortUrl"></p>
+    </div>
+
+    <script>
+        document.getElementById("shortUrlForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var form = event.target;
+            var longUrlInput = document.getElementById("longUrl");
+            var longUrl = longUrlInput.value.trim();
+            
+            // Check if the URL starts with "http://" or "https://"
+            if (!longUrl.startsWith("http://") && !longUrl.startsWith("https://")) {
+                // Prepend "https://" to the URL
+                longUrl = "https://" + longUrl;
+                longUrlInput.value = longUrl; // Update the input field value
+            }
+
+            var formData = new FormData(form);
+            var jsonData = {};
+            
+            formData.forEach(function(value, key) {
+                jsonData[key] = value;
+            });
+
+            fetch(form.action, {
+                method: 'POST',
+                body: JSON.stringify(jsonData),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display output to user
+                document.getElementById("message").innerText = data.message;
+                document.getElementById("shortUrl").innerText = "Short URL: " + data.short_url;
+                document.getElementById("output").style.display = "block";
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+    <style>
+    html, body {
+      height: 100%;
+    }
+    html {
+      display: table;
+      margin: auto;
+    }
+     body {
+      font-family: Arial;
+      background-color: #282a36;
+      color: #fff;
+      animation: fadeInAnimation ease 3s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    @keyframes fadeInAnimation {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    label {
+      text-align: center;
+      font-family: Arial; font-weight: bold;
+    }
+
+    #longUrl {
+        font-family: Arial;
+        color: #fff;
+        background-color: #3b3f51;        
+        border-radius: 8px;
+        border: none;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 2px 2px;
+        font-family: Arial;
+    }
+
+    #submit {
+      background-color: #bd93f9;
+      border-radius: 8px;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 2px 2px;
+      cursor: pointer;
+      font-family: Arial;
+    }
+    
+    </style>
+</body>
+</html>
