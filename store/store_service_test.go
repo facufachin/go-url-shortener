@@ -3,13 +3,33 @@ package store
 import (
 	"testing"
 
+	"fmt"
+
+	"github.com/go-redis/redis/v8"
 	"github.com/stretchr/testify/assert"
 )
 
 var testStoreService = &StorageService{}
 
+func InitializeStore_test() *StorageService {
+	redisClient := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
+
+	pong, err := redisClient.Ping(ctx).Result()
+	if err != nil {
+		panic(fmt.Sprintf("Error init Redis: %v", err))
+	}
+
+	fmt.Printf("\nRedis started successfully: pong message = {%s}", pong)
+	storeService.redisClient = redisClient
+	return storeService
+}
+
 func init() {
-	testStoreService = InitializeStore()
+	testStoreService = InitializeStore_test()
 }
 
 func TestStoreInit(t *testing.T) {
