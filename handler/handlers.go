@@ -24,7 +24,7 @@ func CreateShortUrl(c *gin.Context) {
 	shortUrl := shortener.GenerateShortLink(creationRequest.LongUrl, creationRequest.UserId)
 	store.SaveUrlMapping(shortUrl, creationRequest.LongUrl, creationRequest.UserId)
 
-	host := "https://facu.gay/acortador"
+	host := "https://facu.gay/acortador/"
 	c.JSON(200, gin.H{
 		"message":   "URL Acortada Correctamente",
 		"short_url": host + shortUrl,
